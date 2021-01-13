@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "archinstall"
+version = "0.1.0"
+description = ""
+authors = ["Chr0nos <snicolet@student.42.fr>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+ipython = "^7.19.0"
+jedi = "<0.18.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

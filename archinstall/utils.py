@@ -79,4 +79,5 @@ def unmount(path: str, check=False):
 
 
 def genfstab(root: str):
-    run(['genfstab'], root)
+    run(['genfstab', '-U', root])
+    run(['blkid'])

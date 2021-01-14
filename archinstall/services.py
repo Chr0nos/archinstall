@@ -52,5 +52,5 @@ class ServiceManager:
 
     def enable(self):
         for service in self.members:
-            service.register()
+            service.enable()
         return self

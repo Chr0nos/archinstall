@@ -12,4 +12,4 @@ class Pacman:
 
 
 def pacstrap(path: str, packages):
-    run(['pacstrap'] + packages)
+    run(['pacstrap', path] + packages)

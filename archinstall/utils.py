@@ -5,7 +5,7 @@ from contextlib import contextmanager
 
 def run(*args, **kwargs):
     kwargs.setdefault('check', True)
-    print(f'Command: {" ".join(args)} ({kwargs})')
+    print(f'Command: ({args}) ({kwargs})')
     return subprocess_run(*args, **kwargs)
 
 

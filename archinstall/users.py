@@ -11,12 +11,13 @@ class UserAlreadyExists(Exception):
 
 
 class User:
-    def __init__(self, username, uid=None, gid=None, home=None):
+    def __init__(self, username, uid=None, gid=None, home=None, shell=None):
         self.username = username
         self.gid = gid
         self.uid = uid
         self.home = home if home else f'/home/{username}'
         self.groups = self.get_groups()
+        self.shell = shell if shell else '/bin/bash'
 
     def __str__(self):
         return f'{self.username} (uid: {self.uid} gid: {self.gid}) ' \
@@ -44,7 +45,7 @@ class User:
                 gid = int(gid)
                 uid = int(uid)
                 if name == username:
-                    return User(name, uid, gid, home)
+                    return User(name, uid, gid, home, shell)
         raise UserNotFound(username)
 
     def get_groups(self):
@@ -69,7 +70,7 @@ class User:
             User.load(username)
             raise UserAlreadyExists
         except UserNotFound:
-            run(['useradd', '-m', username])
+            run(['useradd', '-m', username, '-s', self.shell])
             return User.load(username)
 
     @staticmethod

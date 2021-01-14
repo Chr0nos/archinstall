@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 from archinstall.pacman import pacstrap, Pacman
-from archinstall.utils import arch_chroot, run, arch_chroot_unmount, genfstab
+from archinstall.utils import (
+    arch_chroot, run, arch_chroot_unmount, genfstab, edit
+)
 from archinstall.users import User
 from archinstall.services import Service, ServiceManager
 from archinstall.helpers import install_grub_i386, install_trizen
@@ -17,13 +19,13 @@ def setup_pepper(path='/mnt', boot_dev='/dev/vda'):
 
     # bootstrap the system
     pacstrap(path, ['base', 'base-devel'])
-    run(['vim', f'{path}/etc/pacman.conf'])
-    run(['vim', f'{path}/etc/locale.gen'])
+    edit(f'{path}/etc/pacman.conf'])
+    edit(f'{path}/etc/locale.gen'])
     open(f'{path}/etc/hostname', 'w').write('pepper\n')
     os.makedirs(f'{path}/etc/', exist_ok=True)
     run(['cp', '-v', '/etc/resolv.conf', f'{path}/etc/resolv.conf'])
-    Pacman.sync()
     with arch_chroot(path):
+        Pacman.sync()
         Pacman.install([
             'net-tools', 'wireguard-tools',
             'grub', 'vim', 'zsh', 'git', 'gcc', 'clang',
@@ -38,11 +40,12 @@ def setup_pepper(path='/mnt', boot_dev='/dev/vda'):
         run(['ln', '-s', '/usr/share/zoneinfo/Europe/Paris', '/etc/localtime'])
 
         # setup my user account
-        user, _ = User.get_or_create('adamaru')
+        user, is_new = User.get_or_create('adamaru')
         user.add_to_groups([
             'audio', 'video', 'wheel', 'docker', 'kvm', 'input', 'render'
         ])
-        run(['passwd', user.username])
+        if is_new:
+            run(['passwd', user.username])
         run(['passwd'])
         install_trizen(user)
 

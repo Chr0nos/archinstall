@@ -1,4 +1,5 @@
 import os
+import sys
 from subprocess import run as subprocess_run
 from contextlib import contextmanager
 
@@ -79,5 +80,20 @@ def unmount(path: str, check=False):
 
 
 def genfstab(root: str):
-    run(['genfstab', '-U', root])
+    fstab = run(['genfstab', '-U', root], capture_output=True).stdout.decode()
+    with open(f'{root}/etc/fstab') as fstab_fd:
+        fstab_fd.write(fstab)
     run(['blkid'])
+
+
+def edit(filepath: str, default=False, editor='vim'):
+    print(f'Do you want to edit "{filepath}" ? (y/N) : ', end='')
+    sys.stdout.flush()
+    try:
+        need_edit = input().lower() in ('y', 'o', 'yes')
+    except EOFError:
+        need_edit = False
+    if not need_edit:
+        return False
+    run([editor, filepath])
+    return True

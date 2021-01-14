@@ -52,7 +52,7 @@ def mount(path: str, opts=None, fs_type=None, device=None):
     args = [path]
     if opts:
         args.append('-o')
-        args.extend(','.join(opts))
+        args.append(','.join(opts))
     if fs_type:
         args.extend(['-t', fs_type])
     if not device and fs_type:

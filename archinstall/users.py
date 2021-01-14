@@ -92,3 +92,10 @@ class User:
         kwargs.setdefault('preexec_fn', self.demote)
         kwargs.setdefault('env', self.env)
         return run(*args, **kwargs)
+
+    def add_to_group(self, group: str):
+        run(['gpasswd' '-a', self.username, group])
+
+    def add_to_groups(self, groups):
+        for group in groups:
+            run(['gpasswd' '-a', self.username, group])

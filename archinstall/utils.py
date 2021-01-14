@@ -43,6 +43,10 @@ def arch_chroot(path: str):
     mount(f'{path}/sys', ['nosuid', 'noexec', 'nodev', 'ro'], 'sysfs')
     with chroot(path):
         yield
+    arch_chroot_unmount(path)
+
+
+def arch_chroot_unmount(path: str):
     unmount(f'{path}/sys')
     unmount(f'{path}/tmp')
     unmount(f'{path}/run')
@@ -72,3 +76,7 @@ def mount(path: str, opts=None, fs_type=None, device=None):
 
 def unmount(path: str, check=False):
     run(['umount', path], check=check)
+
+
+def genfstab(root: str):
+    run(['genfstab'], root)

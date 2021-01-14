@@ -40,9 +40,9 @@ def setup_pepper(path='/mnt', boot_dev='/dev/vda'):
         user.add_to_groups([
             'audio', 'video', 'wheel', 'docker', 'kvm', 'input', 'render'
         ])
-        install_trizen(user)
         run(['passwd', user.username])
         run(['passwd'])
+        install_trizen(user)
 
         install_grub_i386(boot_dev)
     genfstab(path)

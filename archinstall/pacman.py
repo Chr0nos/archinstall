@@ -8,7 +8,7 @@ class Pacman:
 
     @staticmethod
     def install(packages):
-        return run(['/usr/bin/pacman', '-S', '--no-confirm'] + packages)
+        return run(['/usr/bin/pacman', '-S', '--noconfirm'] + packages)
 
 
 def pacstrap(path: str, packages):

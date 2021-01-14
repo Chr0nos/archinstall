@@ -1,6 +1,12 @@
 import os
-from subprocess import run
+from subprocess import run as subprocess_run
 from contextlib import contextmanager
+
+
+def run(*args, **kwargs):
+    kwargs.setdefault('check', True)
+    print(f'Command: {" ".join(args)} ({kwargs})')
+    return subprocess_run(*args, **kwargs)
 
 
 @contextmanager
@@ -13,7 +19,6 @@ def chroot(path, change_to='/'):
     os.chdir(real_root)
     os.chroot('.')
     os.chdir(cwd)
-    real_root.close()
 
 
 @contextmanager

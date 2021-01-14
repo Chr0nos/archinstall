@@ -1,4 +1,4 @@
-from subprocess import run
+from archinstall.utils import run
 
 
 class Pacman:

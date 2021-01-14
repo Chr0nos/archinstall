@@ -1,5 +1,5 @@
-from archinstall.pacman import pacstrap, run, Pacman
-from archinstall.utils import arch_chroot
+from archinstall.pacman import pacstrap, Pacman
+from archinstall.utils import arch_chroot, run
 from archinstall.users import User
 from archinstall.helpers import install_grub_i386
 import os
@@ -32,7 +32,7 @@ def setup_pepper(path='/mnt', boot_dev='/dev/vda'):
         # setup my user account
         user, _ = User.get_or_create('adamaru')
         run(['passwd', user.username])
-        run['passwd']
+        run(['passwd'])
 
     install_grub_i386(boot_dev)
 

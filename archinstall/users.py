@@ -1,5 +1,5 @@
 import os
-from subprocess import run
+from archinstall.utils import run
 
 
 class UserNotFound(Exception):

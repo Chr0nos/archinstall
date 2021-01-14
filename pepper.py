@@ -11,7 +11,7 @@ def setup_pepper(path='/mnt', boot_dev='/dev/vda'):
     services = ServiceManager()
     services.add(Service('ssh', ['openssh'], 'sshd'))
     services.add(Service('docker', ['docker', 'docker-compose'], 'docker'))
-    services.add(Service('network', ['network-manager'], 'NetworkManager'))
+    services.add(Service('network', ['networkmanager'], 'NetworkManager'))
     services.add_many(Service.short_list(['gpm', 'acpid', 'iptables']))
 
     # bootstrap the system

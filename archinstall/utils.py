@@ -54,7 +54,7 @@ def arch_chroot(path: str):
 
 def mount(path: str, opts=None, fs_type=None, device=None):
     os.makedirs(path, exist_ok=True)
-    args = [path]
+    args = []
     if opts:
         args.append('-o')
         args.append(','.join(opts))
@@ -64,6 +64,7 @@ def mount(path: str, opts=None, fs_type=None, device=None):
         device = fs_type
     if device:
         args.append(device)
+    args.append(path)
     run(['mount'] + args)
 
 

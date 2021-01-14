@@ -2,34 +2,13 @@ from subprocess import run
 
 
 class Pacman:
-    def __init__(self):
-        self.packages = []
-        self.bin = '/usr/bin/pacman'
+    @staticmethod
+    def sync():
+        return run(['/usr/bin/pacman', '-Sy'])
 
-    def __str__(self):
-        return ' '.join(self.packages)
-
-    def add(self, package):
-        self.packages.append(package)
-        return self
-
-    def add_many(self, packages):
-        self.packages.extend(packages)
-        return self
-
-    def sync(self):
-        run([self.bin, '-Sy'])
-        return self
-
-    def install(self):
-        run([self.bin, '-S', '--noconfirm'] + self.packages)
-
-    def remove(self, package):
-        try:
-            self.packages.remove(package)
-        except ValueError:
-            pass
-        run([self.bin, '-Rns', package])
+    @staticmethod
+    def install(packages):
+        return run(['/usr/bin/pacman', '-S', '--no-confirm'] + packages)
 
 
 def pacstrap(path: str, packages):

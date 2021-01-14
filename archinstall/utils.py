@@ -25,7 +25,9 @@ def cd(path):
 
 
 @contextmanager
-def arch_chroot(path):
+def arch_chroot(path: str):
+    assert path != '/'
+    assert os.path.isdir(path)
     mount(f'{path}/proc', ['nosuid', 'noexec', 'nodev'], 'proc')
     mount(f'{path}/dev', ['mode=0755', 'nosuid'], 'devtmpfs')
     mount(f'{path}/dev/pts', ['nodev', 'nosuid'], 'devpts')

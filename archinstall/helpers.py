@@ -30,5 +30,6 @@ def install_trizen(user):
             ['git', 'clone', 'https://aur.archlinux.org/trizen-git/'],
             cwd=user.home
         )
-    user.run(['makepkg', '-si'], cwd=trizen_path)
+    user.run(['makepkg', '-s'], cwd=trizen_path)
+    run('pacman -U trizen-git-*.tar.zst', shell=True)
     user.run(['rm', '-rf', trizen_path])

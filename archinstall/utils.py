@@ -53,6 +53,8 @@ def arch_chroot(path: str):
 
 
 def mount(path: str, opts=None, fs_type=None, device=None):
+    if os.path.ismount(path):
+        return
     os.makedirs(path, exist_ok=True)
     args = []
     if opts:

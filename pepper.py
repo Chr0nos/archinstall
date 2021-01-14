@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from archinstall.pacman import pacstrap, Pacman
 from archinstall.utils import arch_chroot, run, arch_chroot_unmount, genfstab
 from archinstall.users import User
@@ -25,7 +26,7 @@ def setup_pepper(path='/mnt', boot_dev='/dev/vda'):
     with arch_chroot(path):
         Pacman.install([
             'net-tools', 'wireguard-tools',
-            'iptables', 'grub', 'vim', 'zsh', 'git', 'gcc', 'clang',
+            'grub', 'vim', 'zsh', 'git', 'gcc', 'clang',
             'linux', 'linux-headers', 'linux-firmware', 'mkinitcpio', 'mdadm',
             'archlinux-keyring', 'sudo', 'wget', 'xfsprogs', 'tmux',
             *services.packages()

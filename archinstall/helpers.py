@@ -23,7 +23,7 @@ def install_trizen(user):
         'perl-json',
         'perl-data-dump',
         'perl-lwp-protocol-https',
-        'erl-term-readline-gnu'
+        'perl-term-readline-gnu'
     ])
     if not os.path.exists(trizen_path):
         user.run(

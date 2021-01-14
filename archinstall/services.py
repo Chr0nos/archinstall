@@ -18,7 +18,7 @@ class Service:
 
     @classmethod
     def short_list(cls, names):
-        return [cls(name) for name in names]
+        return [cls(name, [name], [name]) for name in names]
 
     def __str__(self):
         return self.name

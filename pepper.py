@@ -18,7 +18,7 @@ def setup_pepper(path='/mnt', boot_dev='/dev/vda'):
         Pacman.install([
             'net-tools', 'networkmanager', 'wireguard-tools', 'fail2ban',
             'iptables', 'grub', 'vim', 'zsh', 'git', 'gcc', 'clang', 'docker',
-            'linux', 'linux-headers', 'linux-firmware', 'mkinitramfs', 'mdadm',
+            'linux', 'linux-headers', 'linux-firmware', 'mkinitcpio', 'mdadm',
             'archlinux-keyring', 'sudo', 'wget', 'xfsprogs', 'tmux'
         ])
         run(['grub-mkconfig', '-o', '/boot/grub.cfg'])

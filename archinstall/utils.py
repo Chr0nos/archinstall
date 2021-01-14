@@ -48,8 +48,10 @@ def arch_chroot(path: str):
 
 
 def mount(path: str, opts=None, fs_type=None, device=None):
+    os.makedirs(path, exist_ok=True)
     args = [path]
     if opts:
+        args.append('-o')
         args.extend(','.join(opts))
     if fs_type:
         args.extend(['-t', fs_type])

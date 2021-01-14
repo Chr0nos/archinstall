@@ -49,7 +49,7 @@ def arch_chroot(path: str):
     unmount(f'{path}/dev/shm')
     unmount(f'{path}/dev/pts')
     unmount(f'{path}/dev')
-    unmount(f'{path}/dev/proc')
+    unmount(f'{path}/proc')
 
 
 def mount(path: str, opts=None, fs_type=None, device=None):

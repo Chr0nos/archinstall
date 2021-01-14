@@ -38,7 +38,7 @@ def arch_chroot(path: str):
     mount(f'{path}/dev/pts', ['nodev', 'nosuid'], 'devpts')
     mount(f'{path}/dev/shm', ['nodev', 'nosuid'], 'tmpfs')
     mount(f'{path}/run', ['nosuid,nodev,mode=755'], 'tmpfs')
-    mount(f'{path}/tmp', ['mode=1777', 'sctrictaname', 'nodev', 'nosuid'],
+    mount(f'{path}/tmp', ['mode=1777', 'strictatime', 'nodev', 'nosuid'],
           'tmpfs')
     mount(f'{path}/sys', ['nosuid', 'noexec', 'nodev', 'ro'], 'sysfs')
     with chroot(path):

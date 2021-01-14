@@ -31,5 +31,6 @@ def install_trizen(user):
             cwd=user.home
         )
     user.run(['makepkg', '-s'], cwd=trizen_path)
-    run('pacman -U trizen-git-*.tar.zst', shell=True)
+    run('pacman -U --noconfirm trizen-git-*.tar.zst',
+        shell=True, check=True, cwd=trizen_path)
     user.run(['rm', '-rf', trizen_path])

@@ -16,13 +16,13 @@ def setup_pepper(path='/mnt', boot_dev='/dev/vda'):
 
     # bootstrap the system
     pacstrap(path, ['base', 'base-devel'])
-    open(f'{path}/etc/hostname', os.O_WRONLY).write('pepper\n')
+    run(['vim', f'{path}/etc/pacman.conf'])
+    run(['vim', f'{path}/etc/locale.gen'])
+    open(f'{path}/etc/hostname', 'w').write('pepper\n')
     os.makedirs(f'{path}/etc/', exist_ok=True)
     run(['cp', '-v', '/etc/resolv.conf', f'{path}/etc/resolv.conf'])
     Pacman.sync()
     with arch_chroot(path):
-        run(['vim', '/etc/pacman.conf'])
-        run(['vim', '/etc/locale.gen'])
         Pacman.install([
             'net-tools', 'wireguard-tools',
             'iptables', 'grub', 'vim', 'zsh', 'git', 'gcc', 'clang',

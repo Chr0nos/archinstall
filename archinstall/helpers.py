@@ -34,3 +34,10 @@ def install_trizen(user):
     run('pacman -U --noconfirm trizen-git-*.tar.zst',
         shell=True, check=True, cwd=trizen_path)
     user.run(['rm', '-rf', trizen_path])
+
+
+def set_timezone(timezone='Europe/Paris'):
+    tzfile = '/etc/localtime'
+    if os.path.exists(tzfile):
+        os.unlink(tzfile)
+    run(['ln', '-s', '/usr/share/zoneinfo/Europe/Paris', '/etc/localtime'])

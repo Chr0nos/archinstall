@@ -5,7 +5,7 @@ from archinstall.utils import (
 )
 from archinstall.users import User
 from archinstall.services import Service, ServiceManager
-from archinstall.helpers import install_grub_i386, install_trizen
+from archinstall.helpers import install_grub_i386, install_trizen, set_timezone
 import os
 
 
@@ -30,14 +30,16 @@ def setup_pepper(path='/mnt', boot_dev='/dev/vda'):
             'net-tools', 'wireguard-tools',
             'grub', 'vim', 'zsh', 'git', 'gcc', 'clang',
             'linux', 'linux-headers', 'linux-firmware', 'mkinitcpio', 'mdadm',
-            'archlinux-keyring', 'sudo', 'wget', 'xfsprogs', 'tmux',
+            'archlinux-keyring', 'sudo', 'wget',
+            'xfsprogs', 'btrfs-progs',
+            'tmux',
             'neofetch',
             *services.packages()
         ])
         run(['mkinitcpio', '-p', 'linux'])
         services.enable()
         os.makedirs('/etc/polkit-1/rules.d/', exist_ok=True)
-        run(['ln', '-s', '/usr/share/zoneinfo/Europe/Paris', '/etc/localtime'])
+        set_timezone('Europe/Paris')
 
         # setup my user account
         user, is_new = User.get_or_create('adamaru')

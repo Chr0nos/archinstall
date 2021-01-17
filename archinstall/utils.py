@@ -2,12 +2,19 @@ import os
 import sys
 from subprocess import run as subprocess_run
 from contextlib import contextmanager
+import asyncio
 
 
 def run(*args, **kwargs):
     kwargs.setdefault('check', True)
     print(f'Command: ({args}) ({kwargs})')
     return subprocess_run(*args, **kwargs)
+
+
+async def aio_run(*args, **kwargs):
+    pid = await asyncio.subprocess.create_subprocess_exec(*args, **kwargs)
+    await pid.wait()
+    return pid
 
 
 @contextmanager
@@ -86,13 +93,16 @@ def genfstab(root: str):
     run(['blkid'])
 
 
-def edit(filepath: str, default=False, editor='vim'):
-    print(f'Do you want to edit "{filepath}" ? (y/N) : ', end='')
-    sys.stdout.flush()
-    try:
-        need_edit = input().lower() in ('y', 'o', 'yes')
-    except EOFError:
-        need_edit = False
+def edit(filepath: str, default=False, editor='vim', ask=True):
+    if ask:
+        print(f'Do you want to edit "{filepath}" ? (y/N) : ', end='')
+        sys.stdout.flush()
+        try:
+            need_edit = input().lower() in ('y', 'o', 'yes')
+        except EOFError:
+            need_edit = False
+    else:
+        need_edit = default
     if not need_edit:
         return False
     run([editor, filepath])

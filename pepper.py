@@ -19,8 +19,8 @@ def setup_pepper(path='/mnt', boot_dev='/dev/vda'):
 
     # bootstrap the system
     pacstrap(path, ['base', 'base-devel'])
-    edit(f'{path}/etc/pacman.conf'])
-    edit(f'{path}/etc/locale.gen'])
+    edit(f'{path}/etc/pacman.conf')
+    edit(f'{path}/etc/locale.gen')
     open(f'{path}/etc/hostname', 'w').write('pepper\n')
     os.makedirs(f'{path}/etc/', exist_ok=True)
     run(['cp', '-v', '/etc/resolv.conf', f'{path}/etc/resolv.conf'])

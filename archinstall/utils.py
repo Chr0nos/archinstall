@@ -88,7 +88,7 @@ def unmount(path: str, check=False):
 
 def genfstab(root: str):
     fstab = run(['genfstab', '-U', root], capture_output=True).stdout.decode()
-    with open(f'{root}/etc/fstab') as fstab_fd:
+    with open(f'{root}/etc/fstab', 'w') as fstab_fd:
         fstab_fd.write(fstab)
     run(['blkid'])
 

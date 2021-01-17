@@ -31,7 +31,7 @@ def setup_pepper(path='/mnt', boot_dev='/dev/vda'):
             'grub', 'vim', 'zsh', 'git', 'gcc', 'clang',
             'linux', 'linux-headers', 'linux-firmware', 'mkinitcpio', 'mdadm',
             'archlinux-keyring', 'sudo', 'wget',
-            'xfsprogs', 'btrfs-progs',
+            'gdisk', 'xfsprogs', 'btrfs-progs',
             'tmux',
             'neofetch',
             *services.packages()

@@ -70,7 +70,7 @@ class User:
             User.load(username)
             raise UserAlreadyExists
         except UserNotFound:
-            run(['useradd', '-m', username, '-s', self.shell])
+            run(['useradd', '-m', username])
             return User.load(username)
 
     @staticmethod

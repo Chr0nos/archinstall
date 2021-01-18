@@ -15,7 +15,11 @@ def setup_pepper(path='/mnt', boot_dev='/dev/vda'):
     services.add(Service('ssh', ['openssh'], 'sshd'))
     services.add(Service('docker', ['docker', 'docker-compose'], 'docker'))
     services.add(Service('network', ['networkmanager'], 'NetworkManager'))
-    services.add_many(Service.short_list(['gpm', 'acpid', 'iptables']))
+    services.add_many(Service.short_list([
+        'gpm', 'acpid', 'iptables', 'fancontrol'
+    ]))
+    services.add(Service(
+        'libvirt', ['firewalld', 'qemu'], ['virtnetworkd', 'libvirtd']))
 
     # bootstrap the system
     pacstrap(path, ['base', 'base-devel'])

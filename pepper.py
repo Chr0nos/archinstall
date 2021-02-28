@@ -16,10 +16,14 @@ def setup_pepper(path='/mnt', boot_dev='/dev/vda'):
     services.add(Service('docker', ['docker', 'docker-compose'], 'docker'))
     services.add(Service('network', ['networkmanager'], 'NetworkManager'))
     services.add_many(Service.short_list([
-        'gpm', 'acpid', 'iptables', 'fancontrol'
+        'gpm', 'acpid', 'iptables', 'fancontrol', 'udisks2'
     ]))
     services.add(Service(
-        'libvirt', ['firewalld', 'qemu'], ['virtnetworkd', 'libvirtd']))
+        'libvirt',
+        ['firewalld', 'qemu', 'ebtables'],
+        ['virtnetworkd', 'libvirtd'])
+    )
+    services.add(Service('smartd', [], 'smartd'))
 
     # bootstrap the system
     pacstrap(path, ['base', 'base-devel'])
@@ -37,7 +41,7 @@ def setup_pepper(path='/mnt', boot_dev='/dev/vda'):
             'archlinux-keyring', 'sudo', 'wget',
             'gdisk', 'xfsprogs', 'btrfs-progs',
             'tmux',
-            'neofetch',
+            'neofetch', 'rtorrent', 'screen', 'openbsd-netcat'
             *services.packages()
         ])
         run(['mkinitcpio', '-p', 'linux'])
@@ -46,11 +50,12 @@ def setup_pepper(path='/mnt', boot_dev='/dev/vda'):
         set_timezone('Europe/Paris')
 
         # setup my user account
-        user, is_new = User.get_or_create('adamaru')
+        user, is_new = User.get_or_create('snicolet')
         user.add_to_groups([
             'audio', 'video', 'wheel', 'docker', 'kvm', 'input', 'render'
         ])
         if is_new:
+            user.run(['ssh-keygen', '-N', ''])
             run(['passwd', user.username])
         run(['passwd'])
         install_trizen(user)

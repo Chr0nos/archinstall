@@ -40,4 +40,7 @@ def set_timezone(timezone='Europe/Paris'):
     tzfile = '/etc/localtime'
     if os.path.exists(tzfile):
         os.unlink(tzfile)
-    run(['ln', '-s', '/usr/share/zoneinfo/Europe/Paris', '/etc/localtime'])
+    requested_tz_file = f'/usr/share/zoneinfo/{timezone}'
+    if not os.path.isfile(requested_tz_file):
+        raise FileNotFoundError(requested_tz_file)
+    run(['ln', '-s', requested_tz_file, '/etc/localtime'])

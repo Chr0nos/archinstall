@@ -15,6 +15,7 @@ def setup_pepper(path='/mnt', boot_dev='/dev/vda'):
     services.add(Service('ssh', ['openssh'], 'sshd'))
     services.add(Service('docker', ['docker', 'docker-compose'], 'docker'))
     services.add(Service('network', ['networkmanager'], 'NetworkManager'))
+    services.add(Service('SMART', ['smartmontools'], 'smartd'))
     services.add_many(Service.short_list([
         'gpm', 'acpid', 'iptables', 'fancontrol', 'udisks2'
     ]))
@@ -23,7 +24,6 @@ def setup_pepper(path='/mnt', boot_dev='/dev/vda'):
         ['firewalld', 'qemu', 'ebtables'],
         ['virtnetworkd', 'libvirtd'])
     )
-    services.add(Service('smartd', [], 'smartd'))
 
     # bootstrap the system
     pacstrap(path, ['base', 'base-devel'])
@@ -40,7 +40,7 @@ def setup_pepper(path='/mnt', boot_dev='/dev/vda'):
             'linux', 'linux-headers', 'linux-firmware', 'mkinitcpio', 'mdadm',
             'archlinux-keyring', 'sudo', 'wget',
             'gdisk', 'xfsprogs', 'btrfs-progs',
-            'tmux',
+            'tmux', 'smartmontols',
             'neofetch', 'rtorrent', 'screen', 'openbsd-netcat'
             *services.packages()
         ])

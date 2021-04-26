@@ -1,3 +1,4 @@
+from typing import List
 from archinstall.utils import run
 
 
@@ -6,14 +7,14 @@ class Service:
     packages = []
     services = []
 
-    def __init__(self, name, packages, services):
+    def __init__(self, name: str, packages = List[str], services = List[str]):
         self.name = name
         self.packages = packages
         self.services = services if not isinstance(services, str) \
             else [services]
 
     @classmethod
-    def short(cls, name):
+    def short(cls, name: str):
         return cls(name, [name], [name])
 
     @classmethod
@@ -44,7 +45,7 @@ class ServiceManager:
         self.members.extend(services)
         return self
 
-    def packages(self):
+    def packages(self) -> List[str]:
         pkgs = []
         for service in self.members:
             pkgs.extend(service.packages)
